@@ -1,3 +1,5 @@
+import cstjean.mobile.dames.Damier;
+
 /**
  * Classe principale qui contient le point d’entrée du programme.
  *
@@ -16,6 +18,8 @@ public class Main {
      * @param args les arguments passés en ligne de commande
      */
     public static void main(String[] args) {
-
+        Damier damier = new Damier();
+        damier.initialiser();
+        damier.deplacer(35, 5);
     }
 }

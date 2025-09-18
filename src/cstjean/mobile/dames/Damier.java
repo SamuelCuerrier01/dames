@@ -25,7 +25,7 @@ import java.util.List;
  *     <li>Récupérer le pion présent à une position,</li>
  *     <li>Compter le nombre total de pions,</li>
  *     <li>Déléguer l’initialisation et l’affichage
- *         de la configuration standard à {@link DamierInitialiseur}.</li>
+ *         de la configuration standard à {@link DamierAfficher}.</li>
  * </ul>
  *
  * @author Samuel Cuerrier
@@ -49,6 +49,8 @@ public class Damier {
      * </p>
      */
     private final List<Pion> pions;
+
+    private Pion.Couleur joueurCourant;
 
     /**
      * Construit un damier vide.
@@ -76,6 +78,10 @@ public class Damier {
      */
     public List<Pion> getPions() {
         return new ArrayList<>(pions);
+    }
+
+    public Pion.Couleur getJoueurCourant() {
+        return joueurCourant;
     }
 
     /**
@@ -123,7 +129,7 @@ public class Damier {
      * Initialise le damier dans sa configuration de départ standard.
      *
      * <p>
-     * Cette méthode délègue l’initialisation à {@link DamierInitialiseur},
+     * Cette méthode délègue l’initialisation à {@link DamierAfficher},
      * qui se charge de :
      * </p>
      * <ul>
@@ -143,7 +149,61 @@ public class Damier {
      * </ul>
      */
     public void initialiser() {
-        DamierInitialiseur d = new DamierInitialiseur();
-        System.out.println(d.initialiser(this));
+        List<Pion> pions = this.getPions();
+
+        // Placer les pions noirs et blancs
+        for (int i = 0; i < 20; i++) {
+            this.ajouterPion(i + 1, new Pion(Pion.Couleur.Noir));
+        }
+        // 10 cases centrales vides (indices 20-29) -> déjà null
+        // 20 pions blancs
+        for (int i = 30; i < 50; i++) {
+            this.ajouterPion(i + 1, new Pion(Pion.Couleur.Blanc));
+        }
+
+        DamierAfficher d = new DamierAfficher();
+        System.out.println(d.afficher(this));
+        joueurCourant = Pion.Couleur.Blanc;
+    }
+
+    public void deplacer(int posInitial, int posFinal) {
+        try {
+            if (this.recupererPion(posInitial).getCouleur() == joueurCourant) {
+                this.ajouterPion(posFinal, recupererPion(posInitial));
+                this.ajouterPion(posInitial, null);
+                DamierAfficher d = new DamierAfficher();
+                System.out.println(d.afficher(this));
+                if (joueurCourant == Pion.Couleur.Blanc) {
+                    joueurCourant = Pion.Couleur.Noir;
+                } else {
+                    joueurCourant = Pion.Couleur.Blanc;
+                }
+            }
+        }catch(Exception e) {
+            System.out.println("le pion choisi est soit null ou ce n'est pas a son tour");
+        }
+        verifierDame();
+
+    }
+
+    public void verifierDame() {
+        DamierAfficher d = new DamierAfficher();
+        try {
+            for (int i = 1; i <= 5; i++) {
+                if (this.recupererPion(i).getCouleur() == Pion.Couleur.Blanc) {
+                    this.ajouterPion(i, new Dame(Pion.Couleur.Blanc));
+                } else {
+                    System.out.println("pas de dames");
+                }
+            }
+            for (int i = 46; i <= 50; i++) {
+                if (this.recupererPion(i).getCouleur() == Pion.Couleur.Noir) {
+                    this.ajouterPion(i, new Dame(Pion.Couleur.Noir));
+                } else {
+                    System.out.println("pas de dames");
+                }
+            }
+            System.out.println(d.afficher(this));
+        } catch (Exception e) {}
     }
 }

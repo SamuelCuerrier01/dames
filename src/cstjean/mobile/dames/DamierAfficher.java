@@ -1,7 +1,5 @@
 package cstjean.mobile.dames;
 
-import java.util.List;
-
 /**
  * Gère l’initialisation et l’affichage d’un {@link Damier}.
  *
@@ -10,7 +8,7 @@ import java.util.List;
  * et affiche le damier sous forme de grille.
  * </p>
  */
-public class DamierInitialiseur {
+public class DamierAfficher {
 
     /**
      * Initialise le damier dans sa configuration de départ standard,
@@ -35,20 +33,8 @@ public class DamierInitialiseur {
      *
      * @return le String de la représentation
      */
-    public String initialiser(Damier damier) {
+    public String afficher(Damier damier) {
         StringBuilder representation = new StringBuilder();
-        List<Pion> pions = damier.getPions();
-
-        // Placer les pions noirs et blancs
-        for (int i = 0; i < 20; i++) {
-            damier.ajouterPion(i + 1, new Pion(Pion.Couleur.Noir));
-        }
-        // 10 cases centrales vides (indices 20-29) -> déjà null
-        // 20 pions blancs
-        for (int i = 30; i < 50; i++) {
-            damier.ajouterPion(i + 1, new Pion(Pion.Couleur.Blanc));
-        }
-
         // Afficher la grille
         int compteur = 1;
         for (int i = 0; i < 10; i++) {

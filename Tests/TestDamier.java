@@ -97,4 +97,24 @@ public class TestDamier extends TestCase {
             assertEquals('p', damier.getPions().get(i).getRepresentation());
         }
     }
+
+    public void testDeplacer() {
+        Damier damier = new Damier();
+        damier.initialiser();
+        assertNull(damier.recupererPion(25));
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(35).getCouleur());
+        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+        damier.deplacer(35, 25);
+        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(25).getCouleur());
+        assertNull(damier.recupererPion(35));
+        damier.deplacer(17, 21);
+        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(21).getCouleur());
+        assertNull(damier.recupererPion(17));
+        damier.deplacer(50, 1);
+        damier.deplacer(2, 49);
+        assertEquals('d', damier.recupererPion(1).getRepresentation());
+        assertEquals('D', damier.recupererPion(49).getRepresentation());
+    }
 }
