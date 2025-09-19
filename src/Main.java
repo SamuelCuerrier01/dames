@@ -21,7 +21,5 @@ public class Main {
         Damier damier = new Damier();
         damier.initialiser();
         damier.deplacer(35, 30);
-
-        //test ==> Ignorer
     }
 }
