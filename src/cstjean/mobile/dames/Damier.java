@@ -168,7 +168,7 @@ public class Damier {
 
     public void deplacer(int posInitial, int posFinal) {
         try {
-            if (this.recupererPion(posInitial).getCouleur() == joueurCourant && Math.abs(posFinal - posInitial) <= 5 /*&& this.recupererPion(posInitial).getCouleur() != joueurCourant*/) {
+            if (this.recupererPion(posInitial).getRepresentation() == 'p' || this.recupererPion(posInitial).getRepresentation() == 'P' || this.recupererPion(posInitial).getCouleur() == joueurCourant && Math.abs(posFinal - posInitial) <= 5 && this.recupererPion(posFinal) == null || this.recupererPion(posFinal).getCouleur() != joueurCourant) {
                 this.ajouterPion(posFinal, recupererPion(posInitial));
                 this.ajouterPion(posInitial, null);
                 DamierAfficher d = new DamierAfficher();

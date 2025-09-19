@@ -163,6 +163,5 @@ public class TestDamier extends TestCase {
         damier.deplacer(41, 46);
         assertEquals('d', damier.recupererPion(5).getRepresentation());
         assertEquals('D',  damier.recupererPion(46).getRepresentation());
-        damier.deplacer(5, 30);
     }
 }
