@@ -102,19 +102,67 @@ public class TestDamier extends TestCase {
         Damier damier = new Damier();
         damier.initialiser();
         assertNull(damier.recupererPion(30));
+        assertNull(damier.recupererPion(21));
         assertEquals(Pion.Couleur.Blanc, damier.recupererPion(35).getCouleur());
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+        damier.deplacer(20, 25);
+        assertNull(damier.recupererPion(25));
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(20).getCouleur());
         damier.deplacer(35, 30);
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
         assertEquals(Pion.Couleur.Blanc, damier.recupererPion(30).getCouleur());
         assertNull(damier.recupererPion(35));
+        damier.deplacer(31, 26);
+        assertNull(damier.recupererPion(26));
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(31).getCouleur());
         damier.deplacer(17, 21);
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
         assertEquals(Pion.Couleur.Noir, damier.recupererPion(21).getCouleur());
         assertNull(damier.recupererPion(17));
-        damier.deplacer(50, 1);
-        damier.deplacer(2, 49);
-        assertEquals('d', damier.recupererPion(1).getRepresentation());
-        assertEquals('D', damier.recupererPion(49).getRepresentation());
+
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(18).getCouleur());
+        assertNull(damier.recupererPion(23));
+        damier.deplacer(23, 18);
+        assertNull(damier.recupererPion(23));
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(18).getCouleur());
+
+        //déplacement de plus de 5
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(33).getCouleur());
+        assertNull(damier.recupererPion(23));
+        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+        damier.deplacer(33, 23);
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(33).getCouleur());
+        assertNull(damier.recupererPion(23));
+        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+        damier.deplacer(30, 25);
+
+        //déplacement sur un pion de même couleur
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
+        assertEquals(Pion.Couleur.Noir ,damier.recupererPion(6).getCouleur());
+        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
+        damier.deplacer(1, 6);
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(6).getCouleur());
+        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
+    }
+
+    public void testDeplacerDames() {
+        Damier damier = new Damier();
+        damier.initialiser();
+        damier.deplacer(35, 30);
+        damier.deplacer(16, 21);
+        damier.deplacer(30, 25);
+        damier.deplacer(21, 26);
+        damier.deplacer(25, 20);
+        damier.deplacer(26, 31);
+        damier.deplacer(20, 15);
+        damier.deplacer(31, 36);
+        damier.deplacer(15, 10);
+        damier.deplacer(36, 41);
+        damier.deplacer(10, 5);
+        damier.deplacer(41, 46);
+        assertEquals('d', damier.recupererPion(5).getRepresentation());
+        assertEquals('D',  damier.recupererPion(46).getRepresentation());
+        damier.deplacer(5, 30);
     }
 }
