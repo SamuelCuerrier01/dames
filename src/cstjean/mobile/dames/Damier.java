@@ -168,7 +168,7 @@ public class Damier {
 
     public void deplacer(int posInitial, int posFinal) {
         try {
-            if (this.recupererPion(posInitial).getCouleur() == joueurCourant) {
+            if (this.recupererPion(posInitial).getCouleur() == joueurCourant && Math.abs(posFinal - posInitial) <= 5 /*&& this.recupererPion(posFinal).getCouleur() != joueurCourant*/) {
                 this.ajouterPion(posFinal, recupererPion(posInitial));
                 this.ajouterPion(posInitial, null);
                 DamierAfficher d = new DamierAfficher();
@@ -178,9 +178,15 @@ public class Damier {
                 } else {
                     joueurCourant = Pion.Couleur.Blanc;
                 }
+            }else if(Math.abs(posFinal - posInitial) > 5){
+                System.out.println("Erreur vous déplacez le  pion trop rapidement");
+            } else if (this.recupererPion(posFinal).getCouleur() == joueurCourant) {
+                System.out.println("Un de vos pion est sur cette case");
+            } else if (this.recupererPion(posInitial).getCouleur() != joueurCourant) {
+                System.out.println("Ce n'est pas a votre tour de jouer");
             }
         }catch(Exception e) {
-            System.out.println("le pion choisi est soit null ou ce n'est pas a son tour");
+                System.out.println("le pion choisi est soit null");
         }
         verifierDame();
 
@@ -192,15 +198,11 @@ public class Damier {
             for (int i = 1; i <= 5; i++) {
                 if (this.recupererPion(i).getCouleur() == Pion.Couleur.Blanc) {
                     this.ajouterPion(i, new Dame(Pion.Couleur.Blanc));
-                } else {
-                    System.out.println("pas de dames");
                 }
             }
             for (int i = 46; i <= 50; i++) {
                 if (this.recupererPion(i).getCouleur() == Pion.Couleur.Noir) {
                     this.ajouterPion(i, new Dame(Pion.Couleur.Noir));
-                } else {
-                    System.out.println("pas de dames");
                 }
             }
             System.out.println(d.afficher(this));

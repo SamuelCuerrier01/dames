@@ -101,12 +101,12 @@ public class TestDamier extends TestCase {
     public void testDeplacer() {
         Damier damier = new Damier();
         damier.initialiser();
-        assertNull(damier.recupererPion(25));
+        assertNull(damier.recupererPion(30));
         assertEquals(Pion.Couleur.Blanc, damier.recupererPion(35).getCouleur());
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        damier.deplacer(35, 25);
+        damier.deplacer(35, 30);
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(25).getCouleur());
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(30).getCouleur());
         assertNull(damier.recupererPion(35));
         damier.deplacer(17, 21);
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());

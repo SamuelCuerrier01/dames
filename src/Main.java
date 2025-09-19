@@ -20,6 +20,6 @@ public class Main {
     public static void main(String[] args) {
         Damier damier = new Damier();
         damier.initialiser();
-        damier.deplacer(35, 5);
+        damier.deplacer(35, 30);
     }
 }
