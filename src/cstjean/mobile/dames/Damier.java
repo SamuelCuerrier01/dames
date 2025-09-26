@@ -168,35 +168,106 @@ public class Damier {
     }
 
     public void deplacer(int posInitial, int posFinal) {
+        DamierAfficher d = new DamierAfficher();
         try {
-            if (
-                    ( (this.recupererPion(posInitial).getRepresentation() == 'p'
-                            || this.recupererPion(posInitial).getRepresentation() == 'P')
-                            && this.recupererPion(posInitial).getCouleur() == joueurCourant
-                            && Math.abs(posFinal - posInitial) <= 5
-                            && (this.recupererPion(posFinal) == null
-                            || this.recupererPion(posFinal).getCouleur() != joueurCourant) )
-            ) {
-                this.ajouterPion(posFinal, recupererPion(posInitial));
-                this.ajouterPion(posInitial, null);
-                DamierAfficher d = new DamierAfficher();
-                System.out.println(d.afficher(this));
-                if (joueurCourant == Pion.Couleur.Blanc) {
-                    joueurCourant = Pion.Couleur.Noir;
-                } else if(joueurCourant == Pion.Couleur.Noir) {
-                    joueurCourant = Pion.Couleur.Blanc;
-                }
-            }else if(Math.abs(posFinal - posInitial) > 5){
-                System.out.println("Erreur vous déplacez le  pion trop rapidement");
-            } else if (this.recupererPion(posFinal).getCouleur() == joueurCourant) {
-                System.out.println("Un de vos pion est sur cette case");
-            } else if (this.recupererPion(posInitial).getCouleur() != joueurCourant) {
-                System.out.println("Ce n'est pas a votre tour de jouer");
+
+            Pion pion = this.recupererPion(posInitial);
+
+            //vérification qu'il y a un pion a posInitial
+            if (pion == null) {
+                System.out.println("Aucun pion a cette position");
+                return;
             }
+            if (pion.getCouleur() != this.getJoueurCourant()) {
+                System.out.println("Ce n'est pas a votre tour de jouer");
+                return;
+            }
+            if(!estDeplacementValide(posInitial, posFinal)) {
+                System.out.println("Déplacement invalide");
+                return;
+            }
+            ajouterPion(posInitial, null);
+            ajouterPion(posFinal, pion);
+            if(joueurCourant == Pion.Couleur.Blanc) {
+                joueurCourant = Pion.Couleur.Noir;
+            }
+            else {
+                joueurCourant = Pion.Couleur.Blanc;
+            }
+
         }catch(Exception e) {
-                System.out.println("le pion choisi est soit null");
+                System.out.println(e);
         }
         verifierDame();
+        d.afficher(this);
+
+    }
+
+    public boolean estDeplacementValide(int posInitial, int posFinal) {
+        List<Integer> nbBordureDroite = List.of(5, 15, 25, 35, 45);
+        List<Integer> nbBordureGauche = List.of(6, 16, 26, 36, 46);
+        Pion pion = this.recupererPion(posInitial);
+        if(pion == null) {
+            return false;
+        }
+
+        //vérif des bordures
+        if (nbBordureDroite.contains(posInitial) || nbBordureGauche.contains(posInitial)) {
+            //pour les mouvements de bordure de joueur blanc
+            if(pion.getCouleur() == Pion.Couleur.Blanc) {
+                if(posFinal - posInitial != -5) {
+                    return false;
+                }
+            }
+            //pour les mouvements de bordure de joueur noir
+            if(pion.getCouleur() == Pion.Couleur.Noir) {
+                if(posFinal - posInitial != 5) {
+                    return false;
+                }
+            }
+        }
+
+        System.out.println((((posInitial - 1)/5)+1));
+        //vérifier mouvements générals pions blancs
+        if(pion.getCouleur() == Pion.Couleur.Blanc) {
+            if ((((posInitial - 1)/5)+1) % 2 == 0) {
+                if(!(posFinal - posInitial == -6 || posFinal - posInitial == -5)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            if((((posInitial - 1)/5)+1) % 2 != 0) {
+                if(!(posFinal - posInitial == -5 || posFinal - posInitial == -4)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+        if(pion.getCouleur() == Pion.Couleur.Noir) {
+            if ((((posInitial - 1)/5)+1) % 2 == 0) {
+                if(!(posFinal - posInitial == 5 || posFinal - posInitial == 4)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            if((((posInitial - 1)/5)+1) % 2 != 0) {
+                if(!(posFinal - posInitial == 6 || posFinal - posInitial == 5)) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+
+
+        return true;
 
     }
 

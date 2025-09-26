@@ -183,4 +183,22 @@ public class TestDamier extends TestCase {
         assertEquals('d', damier.recupererPion(5).getRepresentation());
         assertEquals('D',  damier.recupererPion(46).getRepresentation());
     }
+
+    public void testEstDeplacable() {
+        Damier damier = new Damier();
+        damier.initialiser();
+        assertTrue(damier.estDeplacementValide(19, 24));
+        assertFalse(damier.estDeplacementValide(18, 20));
+        assertTrue(damier.estDeplacementValide(34, 29));
+        assertFalse(damier.estDeplacementValide(31, 28));
+        assertFalse(damier.estDeplacementValide(33, 38));
+        assertTrue(damier.estDeplacementValide(36, 31));
+        assertFalse(damier.estDeplacementValide(36, 30));
+        assertTrue(damier.estDeplacementValide(16, 21));
+        assertFalse(damier.estDeplacementValide(16, 20));
+        assertTrue(damier.estDeplacementValide(15, 20));
+        assertFalse(damier.estDeplacementValide(15, 21));
+        assertTrue(damier.estDeplacementValide(35, 30));
+        assertFalse(damier.estDeplacementValide(35, 31));
+    }
 }
