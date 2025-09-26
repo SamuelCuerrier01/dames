@@ -64,6 +64,7 @@ public class Damier {
         for (int i = 0; i < 50; i++) {
             pions.add(null);
         }
+        joueurCourant = Pion.Couleur.Blanc;
     }
 
     /**
@@ -168,14 +169,21 @@ public class Damier {
 
     public void deplacer(int posInitial, int posFinal) {
         try {
-            if (this.recupererPion(posInitial).getRepresentation() == 'p' || this.recupererPion(posInitial).getRepresentation() == 'P' || this.recupererPion(posInitial).getCouleur() == joueurCourant && Math.abs(posFinal - posInitial) <= 5 && this.recupererPion(posFinal) == null || this.recupererPion(posFinal).getCouleur() != joueurCourant) {
+            if (
+                    ( (this.recupererPion(posInitial).getRepresentation() == 'p'
+                            || this.recupererPion(posInitial).getRepresentation() == 'P')
+                            && this.recupererPion(posInitial).getCouleur() == joueurCourant
+                            && Math.abs(posFinal - posInitial) <= 5
+                            && (this.recupererPion(posFinal) == null
+                            || this.recupererPion(posFinal).getCouleur() != joueurCourant) )
+            ) {
                 this.ajouterPion(posFinal, recupererPion(posInitial));
                 this.ajouterPion(posInitial, null);
                 DamierAfficher d = new DamierAfficher();
                 System.out.println(d.afficher(this));
                 if (joueurCourant == Pion.Couleur.Blanc) {
                     joueurCourant = Pion.Couleur.Noir;
-                } else {
+                } else if(joueurCourant == Pion.Couleur.Noir) {
                     joueurCourant = Pion.Couleur.Blanc;
                 }
             }else if(Math.abs(posFinal - posInitial) > 5){
