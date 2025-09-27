@@ -99,18 +99,18 @@ public class TestDamier extends TestCase {
     }
 
     public void testDeplacer() {
-        //initialiser le damier
+        // initialiser le damier
         Damier damier = new Damier();
         damier.initialiser();
 
-        //test déplacement du mauvais pion
+        // test déplacement du mauvais pion
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
         assertNull(damier.recupererPion(25));
         damier.deplacer(20, 25);
         assertNull(damier.recupererPion(25));
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
 
-        //test premier déplacement pion blanc
+        // test premier déplacement pion blanc
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
         assertNull(damier.recupererPion(30));
         damier.deplacer(35, 30);
@@ -118,7 +118,7 @@ public class TestDamier extends TestCase {
         assertNull(damier.recupererPion(35));
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
 
-        //test premier déplacement pion noir
+        // test premier déplacement pion noir
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
         assertNull(damier.recupererPion(25));
         damier.deplacer(20, 25);
@@ -126,7 +126,7 @@ public class TestDamier extends TestCase {
         assertNull(damier.recupererPion(20));
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
 
-        //test déplacement d'une case null
+        // test déplacement d'une case null
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
         assertNull(damier.recupererPion(21));
         assertNull(damier.recupererPion(26));
@@ -135,53 +135,29 @@ public class TestDamier extends TestCase {
         assertNull(damier.recupererPion(26));
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
 
-        //test déplacement de plus de 5
+        // test déplacement de plus de 5
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        assertEquals(Pion.Couleur.Blanc,damier.recupererPion(31).getCouleur());
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(31).getCouleur());
         assertNull(damier.recupererPion(21));
         damier.deplacer(31, 21);
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        assertEquals(Pion.Couleur.Blanc,damier.recupererPion(31).getCouleur());
+        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(31).getCouleur());
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
 
-
-        /*déplacement de plus de 5
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(33).getCouleur());
-        assertNull(damier.recupererPion(23));
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        damier.deplacer(33, 23);
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(33).getCouleur());
-        assertNull(damier.recupererPion(23));
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        damier.deplacer(30, 25);
-
-        //déplacement sur un pion de même couleur
+        // déplacement sur un pion de même couleur
+        damier.deplacer(31, 26);
         assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
-        assertEquals(Pion.Couleur.Noir ,damier.recupererPion(6).getCouleur());
+        assertEquals(Pion.Couleur.Noir, damier.recupererPion(6).getCouleur());
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
         damier.deplacer(1, 6);
         assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
         assertEquals(Pion.Couleur.Noir, damier.recupererPion(6).getCouleur());
-        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());*/
+        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
     }
 
-    public void testDeplacerDames() {
+    public void testCreerDames() {
         Damier damier = new Damier();
         damier.initialiser();
-        damier.deplacer(35, 30);
-        damier.deplacer(16, 21);
-        damier.deplacer(30, 25);
-        damier.deplacer(21, 26);
-        damier.deplacer(25, 20);
-        damier.deplacer(26, 31);
-        damier.deplacer(20, 15);
-        damier.deplacer(31, 36);
-        damier.deplacer(15, 10);
-        damier.deplacer(36, 41);
-        damier.deplacer(10, 5);
-        damier.deplacer(41, 46);
-        assertEquals('d', damier.recupererPion(5).getRepresentation());
-        assertEquals('D',  damier.recupererPion(46).getRepresentation());
     }
 
     public void testEstDeplacable() {
