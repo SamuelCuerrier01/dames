@@ -169,6 +169,7 @@ public class Damier {
 
     public void deplacer(int posInitial, int posFinal) {
         DamierAfficher d = new DamierAfficher();
+        DeplacementPion dp = new DeplacementPion();
         try {
 
             Pion pion = this.recupererPion(posInitial);
@@ -182,14 +183,14 @@ public class Damier {
                 System.out.println("Ce n'est pas a votre tour de jouer");
                 return;
             }
-            if (!estDeplacementValide(posInitial, posFinal)) {
-                System.out.println("Déplacement invalide");
-                return;
-            }
-            if (recupererPion(posFinal) != null) {
-                if (!estCapturable(posInitial, posFinal)) {
+            if (Math.abs(posInitial - posFinal) == 9 || Math.abs(posInitial - posFinal) == 11) {
+                if (!dp.estCapturable(this, posInitial, posFinal)) {
                     return;
                 }
+            }
+            if(!dp.estDeplacementValide(this, posInitial, posFinal)) {
+                System.out.println("Déplacement non valide");
+                return;
             }
             ajouterPion(posInitial, null);
             ajouterPion(posFinal, pion);
@@ -205,79 +206,6 @@ public class Damier {
         verifierDame();
         d.afficher(this);
 
-    }
-
-    public boolean estDeplacementValide(int posInitial, int posFinal) {
-        List<Integer> nbBordureDroite = List.of(5, 15, 25, 35, 45);
-        List<Integer> nbBordureGauche = List.of(6, 16, 26, 36, 46);
-        Pion pion = this.recupererPion(posInitial);
-        if(pion == null) {
-            return false;
-        }
-
-        // vérif des bordures
-        if (nbBordureDroite.contains(posInitial) || nbBordureGauche.contains(posInitial)) {
-            // pour les mouvements de bordure de joueur blanc
-            if(pion.getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial != -5) {
-                    return false;
-                }
-            }
-            //  les mouvements de bordure de joueur noir
-            if(pion.getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial != 5) {
-                    return false;
-                }
-            }
-        }
-
-        System.out.println((((posInitial - 1) / 5) + 1));
-        // vérifier mouvements générals pions blancs
-        if (pion.getCouleur() == Pion.Couleur.Blanc) {
-            if ((((posInitial - 1)/5)+1) % 2 == 0) {
-                if (!(posFinal - posInitial == -6 || posFinal - posInitial == -5)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
-                if (!(posFinal - posInitial == -5 || posFinal - posInitial == -4)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        if(pion.getCouleur() == Pion.Couleur.Noir) {
-            if ((((posInitial - 1) / 5) + 1) % 2 == 0) {
-                if(!(posFinal - posInitial == 5 || posFinal - posInitial == 4)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if((((posInitial - 1)/5)+1) % 2 != 0) {
-                if(!(posFinal - posInitial == 6 || posFinal - posInitial == 5)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return true;
-
-    }
-
-    public boolean estCapturable(int posInitial, int posFinal) {
-        Pion pion = recupererPion(posInitial);
-        List<Integer> bordureGauche = List.of(1, 6, 11, 16, 21, 26, 31, 36, 41, 46);
-        List<Integer> bordureDroite = List.of(5, 10, 15, 20, 25, 30, 35, 40, 45, 50);
-
-        if (pion == null) {
-            return false;
-        }
-        return true;
     }
 
     public void verifierDame() {

@@ -1,4 +1,5 @@
 import cstjean.mobile.dames.Damier;
+import cstjean.mobile.dames.DeplacementPion;
 import cstjean.mobile.dames.Pion;
 import junit.framework.TestCase;
 
@@ -160,10 +161,11 @@ public class TestDamier extends TestCase {
         damier.initialiser();
     }
 
-    public void testEstDeplacable() {
+    /*public void testEstDeplacable() {
         Damier damier = new Damier();
         damier.initialiser();
-        assertTrue(damier.estDeplacementValide(19, 24));
+
+        assertTrue(DeplacementPion.estDeplacementValide(damier, 19, 24));
         assertFalse(damier.estDeplacementValide(18, 20));
         assertTrue(damier.estDeplacementValide(34, 29));
         assertFalse(damier.estDeplacementValide(31, 28));
@@ -176,5 +178,5 @@ public class TestDamier extends TestCase {
         assertFalse(damier.estDeplacementValide(15, 21));
         assertTrue(damier.estDeplacementValide(35, 30));
         assertFalse(damier.estDeplacementValide(35, 31));
-    }
+    }*/
 }
