@@ -80,8 +80,10 @@ public class DeplacementPion {
             return false;
         }
 
+        if (!contientPionMillieu(damier, posInitial, posFinal)) {
+            return false;
+        }
         //Vérifier si pion au millieu
-        
 
         //Vérifier si pion est a la bordure
         if (nbBordureDroite.contains(posInitial)) {
@@ -112,7 +114,75 @@ public class DeplacementPion {
             }
         }
 
+        return true;
+    }
 
+    public boolean contientPionMillieu(Damier damier, int posInitial, int posFinal) {
+        Pion pion = damier.recupererPion(posInitial);
+        if(pion == null) {
+            return false;
+        }
+        if(damier.recupererPion(posFinal) != null) {
+            return false;
+        }
+        if (pion.getCouleur() == Pion.Couleur.Blanc) {
+            if ((((posInitial - 1)/5)+1) % 2 == 0) {
+                if(posFinal - posInitial == -11) {
+                    if (damier.recupererPion(posInitial - 6) == null)
+                    {
+                        return false;
+                    }
+                }
+                if(posFinal - posInitial == -9) {
+                    if (damier.recupererPion(posInitial - 5) == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
+                if(posFinal - posInitial == -11) {
+                    if (damier.recupererPion(posInitial - 5) == null)
+                    {
+                        return false;
+                    }
+                }
+                if(posFinal - posInitial == -9) {
+                    if (damier.recupererPion(posInitial - 4) == null)
+                    {return false;}
+                }
+            }
+        }
+        if(pion.getCouleur() == Pion.Couleur.Noir) {
+            if (pion.getCouleur() == Pion.Couleur.Blanc) {
+                if ((((posInitial - 1)/5)+1) % 2 == 0) {
+                    if(posFinal - posInitial == 9) {
+                        if (damier.recupererPion(posInitial + 4) == null)
+                        {
+                            return false;
+                        }
+                    }
+                    if(posFinal - posInitial == 11) {
+                        if (damier.recupererPion(posInitial + 5) == null)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
+                    if(posFinal - posInitial == 11) {
+                        if (damier.recupererPion(posInitial - 6) == null)
+                        {
+                            return false;
+                        }
+                    }
+                    if(posFinal - posInitial == 9) {
+                        if (damier.recupererPion(posInitial + 5) == null)
+                        {return false;}
+                    }
+                }
+            }
+        }
         return true;
     }
 }

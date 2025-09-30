@@ -161,22 +161,13 @@ public class TestDamier extends TestCase {
         damier.initialiser();
     }
 
-    /*public void testEstDeplacable() {
+    public void testEstCapturable() {
         Damier damier = new Damier();
         damier.initialiser();
-
-        assertTrue(DeplacementPion.estDeplacementValide(damier, 19, 24));
-        assertFalse(damier.estDeplacementValide(18, 20));
-        assertTrue(damier.estDeplacementValide(34, 29));
-        assertFalse(damier.estDeplacementValide(31, 28));
-        assertFalse(damier.estDeplacementValide(33, 38));
-        assertTrue(damier.estDeplacementValide(36, 31));
-        assertFalse(damier.estDeplacementValide(36, 30));
-        assertTrue(damier.estDeplacementValide(16, 21));
-        assertFalse(damier.estDeplacementValide(16, 20));
-        assertTrue(damier.estDeplacementValide(15, 20));
-        assertFalse(damier.estDeplacementValide(15, 21));
-        assertTrue(damier.estDeplacementValide(35, 30));
-        assertFalse(damier.estDeplacementValide(35, 31));
-    }*/
+        DeplacementPion dp = new DeplacementPion();
+        damier.deplacer(35, 30);
+        damier.deplacer(20, 24);
+        damier.deplacer(28,22);
+        assertTrue(dp.contientPionMillieu(damier, 24, 35));
+    }
 }

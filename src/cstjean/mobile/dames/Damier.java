@@ -50,6 +50,9 @@ public class Damier {
      */
     private final List<Pion> pions;
 
+    /**
+     * La couleur du joueur dont c'est le tour de jouer.
+     */
     private Pion.Couleur joueurCourant;
 
     /**
@@ -70,17 +73,21 @@ public class Damier {
     /**
      * Retourne la liste interne représentant les cases du damier.
      *
-     * <p><b>Attention :</b> la liste retournée est la référence interne.
-     * Toute modification de cette liste affecte directement
-     * l’état du damier.
+     * <p><b>Attention :</b> la liste retournée est une copie de la liste interne.
+     * Toute modification de cette copie n'affecte pas directement l’état du damier.
      * </p>
      *
-     * @return une liste de {@link Pion}, où {@code null} représente une case vide
+     * @return une copie de la liste des {@link Pion}, où {@code null} représente une case vide
      */
     public List<Pion> getPions() {
         return new ArrayList<>(pions);
     }
 
+    /**
+     * Retourne la couleur du joueur dont c'est le tour de jouer.
+     *
+     * @return la couleur du joueur courant ({@link Pion.Couleur#Blanc} ou {@link Pion.Couleur#Noir})
+     */
     public Pion.Couleur getJoueurCourant() {
         return joueurCourant;
     }
@@ -167,10 +174,33 @@ public class Damier {
         joueurCourant = Pion.Couleur.Blanc;
     }
 
+    /**
+     * Déplace un pion d'une position initiale vers une position finale, si le mouvement est valide.
+     *
+     * <p>
+     * Cette méthode effectue plusieurs vérifications :
+     * </p>
+     * <ul>
+     *     <li>Vérifie qu'il y a bien un pion à la position initiale,</li>
+     *     <li>Vérifie que le pion appartient au joueur courant,</li>
+     *     <li>Vérifie que le déplacement est valide selon les règles des dames,</li>
+     *     <li>Gère la capture éventuelle d’un pion adverse,</li>
+     *     <li>Met à jour le joueur courant si le déplacement est accepté.</li>
+     * </ul>
+     *
+     * <p>
+     * Après chaque déplacement, la méthode appelle {@link #verifierDame()} pour promouvoir
+     * les pions atteignant la dernière rangée et affiche le damier mis à jour.
+     * </p>
+     *
+     * @param posInitial la position de départ (1 à 50)
+     * @param posFinal   la position d’arrivée (1 à 50)
+     */
     public void deplacer(int posInitial, int posFinal) {
         DamierAfficher d = new DamierAfficher();
         DeplacementPion dp = new DeplacementPion();
         try {
+            dp.estDeplacementValide(this, posInitial, posFinal);
 
             Pion pion = this.recupererPion(posInitial);
 
@@ -192,8 +222,8 @@ public class Damier {
                 System.out.println("Déplacement non valide");
                 return;
             }
-            ajouterPion(posInitial, null);
-            ajouterPion(posFinal, pion);
+            this.ajouterPion(posInitial, null);
+            this.ajouterPion(posFinal, pion);
             if (joueurCourant == Pion.Couleur.Blanc) {
                 joueurCourant = Pion.Couleur.Noir;
             } else {
@@ -201,13 +231,26 @@ public class Damier {
             }
 
         }  catch (Exception e) {
-                System.out.println(e);
+            System.out.println(e);
         }
         verifierDame();
         d.afficher(this);
 
     }
 
+    /**
+     * Vérifie si un pion doit être promu en dame.
+     *
+     * <p>
+     * Un pion blanc est promu en {@link Dame} s’il atteint les cases de la première rangée (1 à 5).
+     * Un pion noir est promu en {@link Dame} s’il atteint les cases de la dernière rangée (46 à 50).
+     * </p>
+     *
+     * <p>
+     * Si une promotion est effectuée, le pion est remplacé par un nouvel objet {@link Dame}
+     * de la couleur correspondante. Le damier est ensuite affiché.
+     * </p>
+     */
     public void verifierDame() {
         DamierAfficher d = new DamierAfficher();
         try {
