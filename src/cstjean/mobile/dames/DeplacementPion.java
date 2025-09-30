@@ -79,11 +79,11 @@ public class DeplacementPion {
         if (damier.recupererPion(posFinal) != null) {
             return false;
         }
-        //Vérifier si il y a un pion au milleiu des deux positions
-        if(nbBordureDroite.contains(posInitial)) {
 
-        }
+        //Vérifier si pion au millieu
+        
 
+        //Vérifier si pion est a la bordure
         if (nbBordureDroite.contains(posInitial)) {
             // pour les mouvements de bordure de joueur blanc
             if(pion.getCouleur() == Pion.Couleur.Blanc) {
@@ -97,8 +97,7 @@ public class DeplacementPion {
                     return false;
                 }
             }
-        }
-        if (nbBordureGauche.contains(posInitial)) {
+        } else if (nbBordureGauche.contains(posInitial)) {
             // pour les mouvements de bordure de joueur blanc
             if(pion.getCouleur() == Pion.Couleur.Blanc) {
                 if(posFinal - posInitial != -9) {
@@ -112,6 +111,8 @@ public class DeplacementPion {
                 }
             }
         }
+
+
         return true;
     }
 }
