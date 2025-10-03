@@ -2,6 +2,9 @@ import cstjean.mobile.dames.Damier;
 import cstjean.mobile.dames.DeplacementPion;
 import cstjean.mobile.dames.Pion;
 import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Classe de test unitaire pour la classe {@link Damier}.
@@ -24,7 +27,7 @@ import junit.framework.TestCase;
  *
  * @author Samuel Cuerrier, Vincent
  */
-public class TestDamier extends TestCase {
+public class TestDamier {
 
     /**
      * Vérifie le comportement d'un {@link Damier} lors de l'ajout de pions.
@@ -40,6 +43,7 @@ public class TestDamier extends TestCase {
      *     <li>Confirmer que le nombre total de pions est correctement mis à jour.</li>
      * </ol>
      */
+    @Test
     public void testCreer() {
         Pion pionBlanc = new Pion(Pion.Couleur.Blanc);
         Damier damier = new Damier();
@@ -76,6 +80,7 @@ public class TestDamier extends TestCase {
      *     par des pions blancs ({@code 'p'}).</li>
      * </ol>
      */
+    @Test
     public void testInitialiser() {
         Damier damier = new Damier();
         assertEquals(0, damier.grandeur());
@@ -99,6 +104,7 @@ public class TestDamier extends TestCase {
         }
     }
 
+    @Test
     public void testDeplacer() {
         // initialiser le damier
         Damier damier = new Damier();
@@ -156,11 +162,13 @@ public class TestDamier extends TestCase {
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
     }
 
+    @Test
     public void testCreerDames() {
         Damier damier = new Damier();
         damier.initialiser();
     }
 
+    @Test
     public void testEstCapturable() {
         Damier damier = new Damier();
         damier.initialiser();

@@ -1,6 +1,8 @@
 import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Pion;
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Classe de test unitaire pour {@link Dame}.
@@ -23,12 +25,13 @@ import junit.framework.TestCase;
  *
  * @author Samuel Cuerrier, Vincent
  */
-public class TestDame extends TestCase {
+public class TestDame {
 
     /**
      * Vérifie la création de dames noires et blanches,
      * ainsi que leur représentation textuelle.
      */
+    @Test
     public void testCreer() {
         Dame dameBlanche = new Dame(Pion.Couleur.Blanc);
         Dame dameNoire = new Dame(Pion.Couleur.Noir);

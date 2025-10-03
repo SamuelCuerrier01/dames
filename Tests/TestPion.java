@@ -1,5 +1,8 @@
 import cstjean.mobile.dames.Pion;
 import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Classe de test unitaire pour la classe {@link Pion}.
@@ -21,7 +24,7 @@ import junit.framework.TestCase;
  *
  * @author Samuel Cuerrier, Vincent
  */
-public class TestPion extends TestCase {
+public class TestPion {
 
     /**
      * Vérifie la création et la représentation de pions
@@ -38,6 +41,7 @@ public class TestPion extends TestCase {
      *     ainsi que sa représentation.</li>
      * </ol>
      */
+    @Test
     public void testCreer() {
         // Création de pions
         Pion pionNoir = new Pion(Pion.Couleur.Noir);
