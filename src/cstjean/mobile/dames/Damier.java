@@ -196,75 +196,11 @@ public class Damier {
      * @param posInitial la position de départ (1 à 50)
      * @param posFinal   la position d’arrivée (1 à 50)
      */
-    public void deplacer(int posInitial, int posFinal) {
-        DamierAfficher d = new DamierAfficher();
-        DeplacementPion dp = new DeplacementPion();
-        try {
-            dp.estDeplacementValide(this, posInitial, posFinal);
-
-            Pion pion = this.recupererPion(posInitial);
-
-            // vérification qu'il y a un pion a posInitial
-            if (pion == null) {
-                System.out.println("Aucun pion a cette position");
-                return;
-            }
-            if (pion.getCouleur() != this.getJoueurCourant()) {
-                System.out.println("Ce n'est pas a votre tour de jouer");
-                return;
-            }
-            if (Math.abs(posInitial - posFinal) == 9 || Math.abs(posInitial - posFinal) == 11) {
-                if (!dp.estCapturable(this, posInitial, posFinal)) {
-                    return;
-                }
-            }
-            if(!dp.estDeplacementValide(this, posInitial, posFinal)) {
-                System.out.println("Déplacement non valide");
-                return;
-            }
-            this.ajouterPion(posInitial, null);
-            this.ajouterPion(posFinal, pion);
-            if (joueurCourant == Pion.Couleur.Blanc) {
-                joueurCourant = Pion.Couleur.Noir;
-            } else {
-                joueurCourant = Pion.Couleur.Blanc;
-            }
-
-        }  catch (Exception e) {
-            System.out.println(e);
+    public boolean deplacer(int posInitial, int posFinal) {
+        DeplacementPion dp = new DeplacementPion(this);
+        if (dp.getToutesLesPossibilites(posInitial).contains(posFinal)) {
+            return true;
         }
-        verifierDame();
-        d.afficher(this);
-
-    }
-
-    /**
-     * Vérifie si un pion doit être promu en dame.
-     *
-     * <p>
-     * Un pion blanc est promu en {@link Dame} s’il atteint les cases de la première rangée (1 à 5).
-     * Un pion noir est promu en {@link Dame} s’il atteint les cases de la dernière rangée (46 à 50).
-     * </p>
-     *
-     * <p>
-     * Si une promotion est effectuée, le pion est remplacé par un nouvel objet {@link Dame}
-     * de la couleur correspondante. Le damier est ensuite affiché.
-     * </p>
-     */
-    public void verifierDame() {
-        DamierAfficher d = new DamierAfficher();
-        try {
-            for (int i = 1; i <= 5; i++) {
-                if (this.recupererPion(i).getCouleur() == Pion.Couleur.Blanc) {
-                    this.ajouterPion(i, new Dame(Pion.Couleur.Blanc));
-                }
-            }
-            for (int i = 46; i <= 50; i++) {
-                if (this.recupererPion(i).getCouleur() == Pion.Couleur.Noir) {
-                    this.ajouterPion(i, new Dame(Pion.Couleur.Noir));
-                }
-            }
-            System.out.println(d.afficher(this));
-        } catch (Exception e) {}
+        return false;
     }
 }

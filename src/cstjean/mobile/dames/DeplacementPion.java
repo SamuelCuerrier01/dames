@@ -1,188 +1,158 @@
 package cstjean.mobile.dames;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeplacementPion {
 
-    List<Integer> nbBordureDroite = List.of(5, 15, 25, 35, 45);
-    List<Integer> nbBordureGauche = List.of(6, 16, 26, 36, 46);
-    public boolean estDeplacementValide(Damier damier, int posInitial, int posFinal) {
-        Pion pion = damier.recupererPion(posInitial);
-        if(pion == null) {
-            return false;
-        }
-        if(damier.recupererPion(posFinal) != null) {
-            return false;
-        }
+    private Damier damier;
 
-        // vérif des bordures
-        if (nbBordureDroite.contains(posInitial) || nbBordureGauche.contains(posInitial)) {
-            // pour les mouvements de bordure de joueur blanc
-            if(pion.getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial != -5) {
-                    return false;
-                }
-            }
-            //  les mouvements de bordure de joueur noir
-            if(pion.getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial != 5) {
-                    return false;
-                }
-            }
-        }
-
-        System.out.println((((posInitial - 1) / 5) + 1));
-        // vérifier mouvements générals pions blancs
-        if (pion.getCouleur() == Pion.Couleur.Blanc) {
-            if ((((posInitial - 1)/5)+1) % 2 == 0) {
-                if (!(posFinal - posInitial == -6 || posFinal - posInitial == -5)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
-                if (!(posFinal - posInitial == -5 || posFinal - posInitial == -4)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        if(pion.getCouleur() == Pion.Couleur.Noir) {
-            if ((((posInitial - 1) / 5) + 1) % 2 == 0) {
-                if(!(posFinal - posInitial == 5 || posFinal - posInitial == 4)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            if((((posInitial - 1)/5)+1) % 2 != 0) {
-                if(!(posFinal - posInitial == 6 || posFinal - posInitial == 5)) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return true;
-
+    public DeplacementPion(Damier damier) {
+        this.damier = damier;
     }
 
-    public boolean estCapturable(Damier damier, int posInitial, int posFinal) {
-        System.out.println("Méthode capturable activé");
-        Pion pion = damier.recupererPion(posInitial);
+    public List<Integer> getToutesLesPossibilites(int position) {
+        List<Integer> touteLesCases = new ArrayList<>();
+        touteLesCases.addAll(getDeplacementsSimples(position));
+        touteLesCases.addAll(getCapturesSimples(position));
+        return touteLesCases;
+    }
 
+    private List<Integer> getDeplacementsSimples(int position) {
+        List<Integer> casesValides = new ArrayList<>();
+        Pion pion = damier.recupererPion(position);
         if (pion == null) {
-            return false;
-        }
-        if (damier.recupererPion(posFinal) != null) {
-            return false;
+            return casesValides;
         }
 
-        if (!contientPionMillieu(damier, posInitial, posFinal)) {
-            return false;
-        }
-        //Vérifier si pion au millieu
+        boolean estDame = pion instanceof Dame;
+        Pion.Couleur couleur = pion.getCouleur();
 
-        //Vérifier si pion est a la bordure
-        if (nbBordureDroite.contains(posInitial)) {
-            // pour les mouvements de bordure de joueur blanc
-            if(pion.getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial != -11) {
-                    return false;
-                }
-            }
-            //  les mouvements de bordure de joueur noir
-            if(pion.getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial != 9) {
-                    return false;
-                }
-            }
-        } else if (nbBordureGauche.contains(posInitial)) {
-            // pour les mouvements de bordure de joueur blanc
-            if(pion.getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial != -9) {
-                    return false;
-                }
-            }
-            //  les mouvements de bordure de joueur noir
-            if(pion.getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial != 11) {
-                    return false;
-                }
-            }
+        int[] coord = convertirPosition(position);
+        int ligne = coord[0];
+        int col = coord[1];
+
+        if (!estDame && couleur == Pion.Couleur.Blanc) {
+            ajouterSiVide(casesValides, ligne - 1, col - 1);
+            ajouterSiVide(casesValides, ligne - 1, col + 1);
         }
 
-        return true;
+        if (!estDame && couleur == Pion.Couleur.Noir) {
+            ajouterSiVide(casesValides, ligne + 1, col - 1);
+            ajouterSiVide(casesValides, ligne + 1, col + 1);
+        }
+
+        if (estDame) {
+            ajouterSiVide(casesValides, ligne - 1, col - 1);
+            ajouterSiVide(casesValides, ligne - 1, col + 1);
+            ajouterSiVide(casesValides, ligne + 1, col - 1);
+            ajouterSiVide(casesValides, ligne + 1, col + 1);
+        }
+
+        return casesValides;
     }
 
-    public boolean contientPionMillieu(Damier damier, int posInitial, int posFinal) {
-        Pion pion = damier.recupererPion(posInitial);
-        if(pion == null) {
+    private List<Integer> getCapturesSimples(int position) {
+        List<Integer> casesCaptures = new ArrayList<>();
+        Pion pion = damier.recupererPion(position);
+        if (pion == null) {
+            return casesCaptures;
+        }
+
+        boolean estDame = pion instanceof Dame;
+        Pion.Couleur couleur = pion.getCouleur();
+
+        int[] coord = convertirPosition(position);
+        int ligne = coord[0];
+        int col = coord[1];
+
+        if (!estDame && couleur == Pion.Couleur.Blanc) {
+            ajouterCapture(casesCaptures, ligne, col, ligne - 1, col - 1, ligne - 2, col - 2, couleur);
+            ajouterCapture(casesCaptures, ligne, col, ligne - 1, col + 1, ligne - 2, col + 2, couleur);
+        }
+
+        if (!estDame && couleur == Pion.Couleur.Noir) {
+            ajouterCapture(casesCaptures, ligne, col, ligne + 1, col - 1, ligne + 2, col - 2, couleur);
+            ajouterCapture(casesCaptures, ligne, col, ligne + 1, col + 1, ligne + 2, col + 2, couleur);
+        }
+
+        if (estDame) {
+            ajouterCapture(casesCaptures, ligne, col, ligne - 1, col - 1, ligne - 2, col - 2, couleur);
+            ajouterCapture(casesCaptures, ligne, col, ligne - 1, col + 1, ligne - 2, col + 2, couleur);
+            ajouterCapture(casesCaptures, ligne, col, ligne + 1, col - 1, ligne + 2, col - 2, couleur);
+            ajouterCapture(casesCaptures, ligne, col, ligne + 1, col + 1, ligne + 2, col + 2, couleur);
+        }
+
+        return casesCaptures;
+    }
+
+    private void ajouterSiVide(List<Integer> casesValides, int ligne, int col) {
+        if (!estCoordValide(ligne, col)) {
+            return;
+        }
+        int position = positionDepuisCoord(ligne, col);
+        if (damier.recupererPion(position) == null) {
+            casesValides.add(position);
+        }
+    }
+
+    private void ajouterCapture(List<Integer> casesCaptures, int ligne, int col, int ligneMilieu, int colMilieu, int ligneDest, int colDest, Pion.Couleur couleur) {
+        if (!estCoordValide(ligneMilieu, colMilieu)) {
+            return;
+        }
+        if (!estCoordValide(ligneDest, colDest)) {
+            return;
+        }
+
+        int posMilieu = positionDepuisCoord(ligneMilieu, colMilieu);
+        int posDest = positionDepuisCoord(ligneDest, colDest);
+
+        Pion pionMilieu = damier.recupererPion(posMilieu);
+        Pion pionDest = damier.recupererPion(posDest);
+
+        if (pionMilieu != null && pionMilieu.getCouleur() != couleur && pionDest == null) {
+            casesCaptures.add(posDest);
+        }
+    }
+
+    private int[] convertirPosition(int position) {
+        int compteur = 1;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if ((i + j) % 2 == 1) {
+                    if (compteur == position) {
+                        return new int[]{i, j};
+                    }
+                    compteur++;
+                }
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    private int positionDepuisCoord(int ligne, int col) {
+        if (ligne < 0 || ligne >= 10 || col < 0 || col >= 10 || (ligne + col) % 2 == 0) {
+            return -1;
+        }
+        int compteur = 1;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if ((i + j) % 2 == 1) {
+                    if (i == ligne && j == col) {
+                        return compteur;
+                    }
+                    compteur++;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private boolean estCoordValide(int ligne, int col) {
+        if (ligne < 0 || ligne >= 10 || col < 0 || col >= 10 || (ligne + col) % 2 == 0) {
             return false;
+        } else {
+            return true;
         }
-        if(damier.recupererPion(posFinal) != null) {
-            return false;
-        }
-        if (pion.getCouleur() == Pion.Couleur.Blanc) {
-            if ((((posInitial - 1)/5)+1) % 2 == 0) {
-                if(posFinal - posInitial == -11) {
-                    if (damier.recupererPion(posInitial - 6) == null)
-                    {
-                        return false;
-                    }
-                }
-                if(posFinal - posInitial == -9) {
-                    if (damier.recupererPion(posInitial - 5) == null)
-                    {
-                        return false;
-                    }
-                }
-            }
-            if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
-                if(posFinal - posInitial == -11) {
-                    if (damier.recupererPion(posInitial - 5) == null)
-                    {
-                        return false;
-                    }
-                }
-                if(posFinal - posInitial == -9) {
-                    if (damier.recupererPion(posInitial - 4) == null)
-                    {return false;}
-                }
-            }
-        }
-        if(pion.getCouleur() == Pion.Couleur.Noir) {
-            if (pion.getCouleur() == Pion.Couleur.Blanc) {
-                if ((((posInitial - 1)/5)+1) % 2 == 0) {
-                    if(posFinal - posInitial == 9) {
-                        if (damier.recupererPion(posInitial + 4) == null)
-                        {
-                            return false;
-                        }
-                    }
-                    if(posFinal - posInitial == 11) {
-                        if (damier.recupererPion(posInitial + 5) == null)
-                        {
-                            return false;
-                        }
-                    }
-                }
-                if ((((posInitial - 1) / 5) + 1) % 2 != 0) {
-                    if(posFinal - posInitial == 11) {
-                        if (damier.recupererPion(posInitial - 6) == null)
-                        {
-                            return false;
-                        }
-                    }
-                    if(posFinal - posInitial == 9) {
-                        if (damier.recupererPion(posInitial + 5) == null)
-                        {return false;}
-                    }
-                }
-            }
-        }
-        return true;
     }
 }

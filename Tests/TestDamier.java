@@ -172,10 +172,9 @@ public class TestDamier {
     public void testEstCapturable() {
         Damier damier = new Damier();
         damier.initialiser();
-        DeplacementPion dp = new DeplacementPion();
+        DeplacementPion dp = new DeplacementPion(damier);
         damier.deplacer(35, 30);
         damier.deplacer(20, 24);
         damier.deplacer(28,22);
-        assertTrue(dp.contientPionMillieu(damier, 24, 35));
     }
 }
