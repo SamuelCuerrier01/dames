@@ -189,7 +189,7 @@ public class Damier {
      * </ul>
      *
      * <p>
-     * Après chaque déplacement, la méthode appelle {@link #verifierDame()} pour promouvoir
+     *
      * les pions atteignant la dernière rangée et affiche le damier mis à jour.
      * </p>
      *
