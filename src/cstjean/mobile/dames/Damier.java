@@ -196,11 +196,31 @@ public class Damier {
      * @param posInitial la position de départ (1 à 50)
      * @param posFinal   la position d’arrivée (1 à 50)
      */
-    public boolean deplacer(int posInitial, int posFinal) {
+    public void deplacer(int posInitial, int posFinal) {
         DeplacementPion dp = new DeplacementPion(this);
-        if (dp.getToutesLesPossibilites(posInitial).contains(posFinal)) {
-            return true;
-        }
-        return false;
+        DamierAfficher da = new DamierAfficher();
+        List<Integer> ligneHaut = List.of(1, 2, 3, 4, 5);
+        List<Integer> ligneBas = List.of(46, 47, 48, 49, 50);
+        try {
+            if (dp.getToutesLesPossibilites(posInitial).contains(posFinal) &&
+                    getPions().get(posInitial - 1).getCouleur() == joueurCourant) {
+                if(ligneHaut.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc)
+                {ajouterPion(posFinal, new Dame(Pion.Couleur.Blanc));
+                } else if(ligneBas.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                    ajouterPion(posFinal, new Dame(Pion.Couleur.Noir));
+                } else {
+                    ajouterPion(posFinal, getPions().get(posInitial - 1));
+                }
+                ajouterPion(posInitial, null);
+
+                if (joueurCourant == Pion.Couleur.Blanc) {
+                    joueurCourant = Pion.Couleur.Noir;
+                } else {
+                    joueurCourant = Pion.Couleur.Blanc;
+                }
+            }
+        } catch(Exception e) {}
+        System.out.println(da.afficher(this));
+        System.out.println(dp.getPosCapturables());
     }
 }

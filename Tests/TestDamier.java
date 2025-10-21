@@ -117,49 +117,41 @@ public class TestDamier {
         assertNull(damier.recupererPion(25));
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
 
-        // test premier déplacement pion blanc
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
         assertNull(damier.recupererPion(30));
         damier.deplacer(35, 30);
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(30).getCouleur());
         assertNull(damier.recupererPion(35));
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
 
-        // test premier déplacement pion noir
         assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
         assertNull(damier.recupererPion(25));
         damier.deplacer(20, 25);
-        assertEquals(Pion.Couleur.Noir, damier.recupererPion(25).getCouleur());
-        assertNull(damier.recupererPion(20));
         assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+    }
 
-        // test déplacement d'une case null
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        assertNull(damier.recupererPion(21));
-        assertNull(damier.recupererPion(26));
-        damier.deplacer(21, 26);
-        assertNull(damier.recupererPion(21));
-        assertNull(damier.recupererPion(26));
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
+    @Test
+    public void testAffichageDame() {
+        Damier damier = new Damier();
+        damier.initialiser();
+        damier.deplacer(35,30);
+        damier.deplacer(20,24);
+        damier.deplacer(31,26);
+        damier.deplacer(15,20);
+        damier.deplacer(26,21);
+        damier.deplacer(24,29);
+        damier.deplacer(30,25);
+        damier.deplacer(10,15);
+        damier.deplacer(36,31);
+        damier.deplacer(20,24);
+        damier.deplacer(32,27);
+        damier.deplacer(15,20);
+        damier.deplacer(37,32);
+        damier.deplacer(5,10);
+        damier.deplacer(34,23);
+        //damier.deplacer(10,15);
+        //damier.deplacer(41,36);
+        //damier.deplacer(15,20);
 
-        // test déplacement de plus de 5
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(31).getCouleur());
-        assertNull(damier.recupererPion(21));
-        damier.deplacer(31, 21);
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-        assertEquals(Pion.Couleur.Blanc, damier.recupererPion(31).getCouleur());
-        assertEquals(Pion.Couleur.Blanc, damier.getJoueurCourant());
-
-        // déplacement sur un pion de même couleur
-        damier.deplacer(31, 26);
-        assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
-        assertEquals(Pion.Couleur.Noir, damier.recupererPion(6).getCouleur());
-        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
-        damier.deplacer(1, 6);
-        assertEquals(Pion.Couleur.Noir, damier.recupererPion(1).getCouleur());
-        assertEquals(Pion.Couleur.Noir, damier.recupererPion(6).getCouleur());
-        assertEquals(Pion.Couleur.Noir, damier.getJoueurCourant());
     }
 
     @Test

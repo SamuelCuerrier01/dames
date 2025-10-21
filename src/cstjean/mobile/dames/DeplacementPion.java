@@ -7,8 +7,15 @@ public class DeplacementPion {
 
     private Damier damier;
 
+    private List<Integer> PosCapturables;
+
     public DeplacementPion(Damier damier) {
         this.damier = damier;
+        PosCapturables = new ArrayList<>();
+    }
+
+    public List<Integer> getPosCapturables() {
+        return PosCapturables;
     }
 
     public List<Integer> getToutesLesPossibilites(int position) {
@@ -96,22 +103,22 @@ public class DeplacementPion {
         }
     }
 
-    private void ajouterCapture(List<Integer> casesCaptures, int ligne, int col, int ligneMilieu, int colMilieu, int ligneDest, int colDest, Pion.Couleur couleur) {
+    private void ajouterCapture(List<Integer> casesCaptures, int ligne, int col, int ligneMilieu, int colMilieu, int ligneFinal, int colFinal, Pion.Couleur couleur) {
         if (!estCoordValide(ligneMilieu, colMilieu)) {
             return;
         }
-        if (!estCoordValide(ligneDest, colDest)) {
+        if (!estCoordValide(ligneFinal, colFinal)) {
             return;
         }
 
         int posMilieu = positionDepuisCoord(ligneMilieu, colMilieu);
-        int posDest = positionDepuisCoord(ligneDest, colDest);
-
+        int posFinal = positionDepuisCoord(ligneFinal, colFinal);
+        PosCapturables.add(posMilieu);
         Pion pionMilieu = damier.recupererPion(posMilieu);
-        Pion pionDest = damier.recupererPion(posDest);
+        Pion pionFinal = damier.recupererPion(posFinal);
 
-        if (pionMilieu != null && pionMilieu.getCouleur() != couleur && pionDest == null) {
-            casesCaptures.add(posDest);
+        if (pionMilieu != null && pionMilieu.getCouleur() != couleur && pionFinal == null) {
+            casesCaptures.add(posFinal);
         }
     }
 
