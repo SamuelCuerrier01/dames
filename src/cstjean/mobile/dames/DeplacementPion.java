@@ -20,12 +20,12 @@ public class DeplacementPion {
 
     public List<Integer> getToutesLesPossibilites(int position) {
         List<Integer> touteLesCases = new ArrayList<>();
-        touteLesCases.addAll(getDeplacementsSimples(position));
+        touteLesCases.addAll(getDeplacementsSimple(position));
         touteLesCases.addAll(getCapturesSimples(position));
         return touteLesCases;
     }
 
-    private List<Integer> getDeplacementsSimples(int position) {
+    private List<Integer> getDeplacementsSimple(int position) {
         List<Integer> casesValides = new ArrayList<>();
         Pion pion = damier.recupererPion(position);
         if (pion == null) {

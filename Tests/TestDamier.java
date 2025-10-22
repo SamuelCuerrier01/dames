@@ -148,9 +148,27 @@ public class TestDamier {
         damier.deplacer(37,32);
         damier.deplacer(5,10);
         damier.deplacer(34,23);
-        //damier.deplacer(10,15);
-        //damier.deplacer(41,36);
-        //damier.deplacer(15,20);
+        damier.deplacer(10,15);
+        damier.deplacer(41,36);
+        damier.deplacer(24,29);
+        damier.deplacer(27,22);
+        damier.deplacer(27,22);
+        damier.deplacer(16,27);
+        damier.deplacer(33,24);
+        damier.deplacer(20,29);
+        damier.deplacer(38,33);
+        damier.deplacer(17,21);
+        damier.deplacer(42,37);
+        damier.deplacer(15,20);
+        damier.deplacer(40,35);
+        damier.deplacer(20,24);
+        damier.deplacer(25,20);
+        damier.deplacer(27,38);
+        damier.deplacer(20,15);
+        damier.deplacer(21,27);
+        damier.deplacer(15,10);
+        damier.deplacer(27,32);
+        damier.deplacer(10,5);
 
     }
 

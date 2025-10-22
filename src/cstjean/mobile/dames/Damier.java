@@ -1,6 +1,7 @@
 package cstjean.mobile.dames;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -204,12 +205,17 @@ public class Damier {
         try {
             if (dp.getToutesLesPossibilites(posInitial).contains(posFinal) &&
                     getPions().get(posInitial - 1).getCouleur() == joueurCourant) {
+                if(Math.abs(posFinal - posInitial) > 6)
+                {
+                    ajouterPion(capture(posInitial, posFinal), null);
+                    ajouterPion(posFinal, getPions().get(posInitial - 1));
+                } else {
+                    ajouterPion(posFinal, getPions().get(posInitial - 1));
+                }
                 if(ligneHaut.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc)
                 {ajouterPion(posFinal, new Dame(Pion.Couleur.Blanc));
                 } else if(ligneBas.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
                     ajouterPion(posFinal, new Dame(Pion.Couleur.Noir));
-                } else {
-                    ajouterPion(posFinal, getPions().get(posInitial - 1));
                 }
                 ajouterPion(posInitial, null);
 
@@ -219,8 +225,59 @@ public class Damier {
                     joueurCourant = Pion.Couleur.Blanc;
                 }
             }
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            System.out.println(e);
+        }
         System.out.println(da.afficher(this));
         System.out.println(dp.getPosCapturables());
+    }
+
+    private int capture(int posInitial, int posFinal) {
+        List<Integer> ligne1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45));
+        if(ligne1.contains(posInitial))
+        {
+            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
+                if(posFinal - posInitial == -11)
+                {
+                    return posFinal + 6;
+                }
+                if(posFinal - posInitial == -9)
+                {
+                    return posFinal + 5;
+                }
+            }
+            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                if(posFinal - posInitial == 11)
+                {
+                    return posFinal - 5;
+                }
+                if(posFinal - posInitial == 9)
+                {
+                    return posFinal - 4;
+                }
+            }
+        } else {
+            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
+                if(posFinal - posInitial == -9)
+                {
+                    return posFinal + 4;
+                }
+                if(posFinal - posInitial == -11)
+                {
+                    return posFinal + 5;
+                }
+            }
+            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                if(posFinal - posInitial == 11)
+                {
+                    return posFinal - 6;
+                }
+                if(posFinal - posInitial == 9)
+                {
+                    return posFinal - 5;
+                }
+            }
+        }
+        return -1;
     }
 }
