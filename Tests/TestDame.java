@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  * se comporte comme attendu.
  * </p>
  *
- * @author Samuel Cuerrier, Vincent
+ * @author Samuel Cuerrier
  */
 public class TestDame {
 

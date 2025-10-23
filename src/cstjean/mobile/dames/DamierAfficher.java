@@ -6,6 +6,7 @@ package cstjean.mobile.dames;
  * <p>
  * Cette classe applique la configuration standard de départ
  * et affiche le damier sous forme de grille.
+ * @author Samuel Cuerrier
  * </p>
  */
 public class DamierAfficher {

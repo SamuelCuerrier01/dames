@@ -17,7 +17,7 @@ package cstjean.mobile.dames;
  *     <li>{@code 'd'} pour une dame blanche.</li>
  * </ul>
  *
- * @author Samuel Cuerrier, Vincent
+ * @author Samuel Cuerrier
  */
 public class Dame extends Pion {
 

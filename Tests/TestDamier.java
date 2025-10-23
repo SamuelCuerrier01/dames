@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  * Ces tests utilisent l'API JUnit 3, via l'héritage de {@link TestCase}.
  * </p>
  *
- * @author Samuel Cuerrier, Vincent
+ * @author Samuel Cuerrier
  */
 public class TestDamier {
 
