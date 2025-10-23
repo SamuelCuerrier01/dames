@@ -169,6 +169,8 @@ public class TestDamier {
         damier.deplacer(15,10);
         damier.deplacer(27,32);
         damier.deplacer(10,5);
+        damier.deplacer(11,16);
+        damier.deplacer(5,10);
 
     }
 
