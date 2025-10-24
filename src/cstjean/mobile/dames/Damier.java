@@ -207,7 +207,7 @@ public class Damier {
                     getPions().get(posInitial - 1).getCouleur() == joueurCourant) {
                 if(Math.abs(posFinal - posInitial) > 6)
                 {
-                    ajouterPion(capture(posInitial, posFinal), null);
+                    ajouterPion(capture(posInitial, posFinal, dp), null);
                     ajouterPion(posFinal, getPions().get(posInitial - 1));
                 } else {
                     ajouterPion(posFinal, getPions().get(posInitial - 1));
@@ -229,19 +229,36 @@ public class Damier {
             System.out.println(e);
         }
         System.out.println(da.afficher(this));
-        System.out.println(dp.getPosCapturables());
     }
 
-    private int capture(int posInitial, int posFinal) {
+    private int capture(int posInitial, int posFinal, DeplacementPion dp) {
+        int coordInitial[] = dp.convertirPosition(posInitial);
+        int coordFinal[] = dp.convertirPosition(posFinal);
+        if(getPions().get(posInitial - 1) instanceof Dame) {
+            if(coordFinal[1] - coordInitial[1] < 0){
+                if (coordFinal[0] - coordInitial[0] < 0) {
+                    return dp.positionDepuisCoord(coordFinal[0] + 1, coordFinal[1] + 1);
+                } else {
+                    return dp.positionDepuisCoord(coordFinal[0] - 1, coordFinal[1] + 1);
+                }
+            } else {
+                if (coordFinal[0] - coordInitial[0] < 0) {
+                    return dp.positionDepuisCoord(coordFinal[0] + 1, coordFinal[1] - 1);
+                } else {
+                    return dp.positionDepuisCoord(coordFinal[0] - 1, coordFinal[1] - 1);
+                }
+            }
+        }
+
         List<Integer> ligne1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45));
-        if(ligne1.contains(posInitial))
+        if (ligne1.contains(posInitial))
         {
-            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial == -11)
+            if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
+                if (posFinal - posInitial == -11)
                 {
                     return posFinal + 6;
                 }
-                if(posFinal - posInitial == -9)
+                if (posFinal - posInitial == -9)
                 {
                     return posFinal + 5;
                 }

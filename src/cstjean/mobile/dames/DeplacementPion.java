@@ -50,10 +50,20 @@ public class DeplacementPion {
         }
 
         if (estDame) {
-            ajouterSiVide(casesValides, ligne - 1, col - 1);
-            ajouterSiVide(casesValides, ligne - 1, col + 1);
-            ajouterSiVide(casesValides, ligne + 1, col - 1);
-            ajouterSiVide(casesValides, ligne + 1, col + 1);
+            int compteur = 0;
+            int i = 0;
+            while(true){
+                i++;
+                compteur = casesValides.size();
+                ajouterSiVide(casesValides, ligne - i, col - i);
+                ajouterSiVide(casesValides, ligne - i, col + i);
+                ajouterSiVide(casesValides, ligne + i, col - i);
+                ajouterSiVide(casesValides, ligne + i, col + i);
+                if(compteur == casesValides.size()){
+                    break;
+                }
+            }
+            System.out.println(casesValides.size());
         }
 
         return casesValides;
@@ -100,6 +110,8 @@ public class DeplacementPion {
         int position = positionDepuisCoord(ligne, col);
         if (damier.recupererPion(position) == null) {
             casesValides.add(position);
+        } else if (damier.getPions().get(positionDepuisCoord(ligne, col)) instanceof Dame) {
+
         }
     }
 
@@ -122,7 +134,7 @@ public class DeplacementPion {
         }
     }
 
-    private int[] convertirPosition(int position) {
+    public int[] convertirPosition(int position) {
         int compteur = 1;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -137,7 +149,7 @@ public class DeplacementPion {
         return new int[]{-1, -1};
     }
 
-    private int positionDepuisCoord(int ligne, int col) {
+    public int positionDepuisCoord(int ligne, int col) {
         if (ligne < 0 || ligne >= 10 || col < 0 || col >= 10 || (ligne + col) % 2 == 0) {
             return -1;
         }

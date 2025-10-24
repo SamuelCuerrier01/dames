@@ -10,6 +10,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 public class TestDeplacementPion {
     private Damier damier;
@@ -88,5 +89,13 @@ public class TestDeplacementPion {
 
         List<Integer> cases = deplacement.getToutesLesPossibilites(22);
         assertFalse(cases.contains(12)); // Pas de capture possible
+    }
+
+    @Test
+    public void testDeplacementSiDame() {
+        damier.ajouterPion(21, new Dame());
+        assertNull(damier.getPions().get(27));
+        damier.deplacer(21,27);
+        assertEquals('d', damier.getPions().get(27 - 1).getRepresentation());
     }
 }

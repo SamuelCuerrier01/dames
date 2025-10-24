@@ -170,7 +170,13 @@ public class TestDamier {
         damier.deplacer(27,32);
         damier.deplacer(10,5);
         damier.deplacer(11,16);
-        damier.deplacer(5,10);
+        damier.deplacer(5 ,10);
+        damier.deplacer(24,30);
+        damier.deplacer(10,15);
+        damier.deplacer(6 ,11);
+        damier.deplacer(33,28);
+        damier.deplacer(16,21);
+        damier.deplacer(15,33);
 
     }
 
