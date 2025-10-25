@@ -1,10 +1,11 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Damier;
 import cstjean.mobile.dames.DeplacementPion;
 import cstjean.mobile.dames.Pion;
-import junit.framework.TestCase;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Classe de test unitaire pour la classe {@link Damier}.
@@ -20,10 +21,6 @@ import static org.junit.Assert.*;
  *     <li>Que la méthode {@code initialiser()} place correctement
  *     les pions noirs, blancs et les cases vides.</li>
  * </ul>
- *
- * <p>
- * Ces tests utilisent l'API JUnit 3, via l'héritage de {@link TestCase}.
- * </p>
  *
  * @author Samuel Cuerrier
  */
@@ -130,54 +127,60 @@ public class TestDamier {
     }
 
     @Test
-    public void testAffichageDame() {
+    public void testAffichageDameBlanche() {
         Damier damier = new Damier();
         damier.initialiser();
-        damier.deplacer(35,30);
-        damier.deplacer(20,24);
-        damier.deplacer(31,26);
-        damier.deplacer(15,20);
-        damier.deplacer(26,21);
-        damier.deplacer(24,29);
-        damier.deplacer(30,25);
-        damier.deplacer(10,15);
-        damier.deplacer(36,31);
-        damier.deplacer(20,24);
-        damier.deplacer(32,27);
-        damier.deplacer(15,20);
-        damier.deplacer(37,32);
-        damier.deplacer(5,10);
-        damier.deplacer(34,23);
-        damier.deplacer(10,15);
-        damier.deplacer(41,36);
-        damier.deplacer(24,29);
-        damier.deplacer(27,22);
-        damier.deplacer(27,22);
-        damier.deplacer(16,27);
-        damier.deplacer(33,24);
-        damier.deplacer(20,29);
-        damier.deplacer(38,33);
-        damier.deplacer(17,21);
-        damier.deplacer(42,37);
-        damier.deplacer(15,20);
-        damier.deplacer(40,35);
-        damier.deplacer(20,24);
-        damier.deplacer(25,20);
-        damier.deplacer(27,38);
-        damier.deplacer(20,15);
-        damier.deplacer(21,27);
-        damier.deplacer(15,10);
-        damier.deplacer(27,32);
-        damier.deplacer(10,5);
-        damier.deplacer(11,16);
-        damier.deplacer(5 ,10);
-        damier.deplacer(24,30);
-        damier.deplacer(10,15);
-        damier.deplacer(6 ,11);
-        damier.deplacer(33,28);
-        damier.deplacer(16,21);
-        damier.deplacer(15,33);
+        damier.deplacer(35, 30);
+        damier.deplacer(20, 24);
+        damier.deplacer(31, 26);
+        damier.deplacer(15, 20);
+        damier.deplacer(26, 21);
+        damier.deplacer(24, 29);
+        damier.deplacer(30, 25);
+        damier.deplacer(10, 15);
+        damier.deplacer(36, 31);
+        damier.deplacer(20, 24);
+        damier.deplacer(32, 27);
+        damier.deplacer(15, 20);
+        damier.deplacer(37, 32);
+        damier.deplacer(5, 10);
+        damier.deplacer(34, 23);
+        damier.deplacer(10, 15);
+        damier.deplacer(41, 36);
+        damier.deplacer(24, 29);
+        damier.deplacer(27, 22);
+        damier.deplacer(27, 22);
+        damier.deplacer(16, 27);
+        damier.deplacer(33, 24);
+        damier.deplacer(20, 29);
+        damier.deplacer(38, 33);
+        damier.deplacer(17, 21);
+        damier.deplacer(42, 37);
+        damier.deplacer(15, 20);
+        damier.deplacer(40, 35);
+        damier.deplacer(20, 24);
+        damier.deplacer(25, 20);
+        damier.deplacer(27, 38);
+        damier.deplacer(20, 15);
+        damier.deplacer(21, 27);
+        damier.deplacer(15, 10);
+        damier.deplacer(27, 32);
+        damier.deplacer(10, 5);
+        damier.deplacer(11, 16);
+        damier.deplacer(5, 10);
+        damier.deplacer(24, 30);
+        damier.deplacer(10, 15);
+        damier.deplacer(6, 11);
+        damier.deplacer(33, 28);
+        damier.deplacer(16, 21);
+        damier.deplacer(15, 33);
+    }
 
+    @Test
+    public void testAffichageDameNoire() {
+        Damier damier = new Damier();
+        damier.ajouterPion(47, new Dame(Pion.Couleur.Noir));
+        assertEquals('D', damier.recupererPion(47).getRepresentation());
     }
 
     @Test
@@ -193,6 +196,64 @@ public class TestDamier {
         DeplacementPion dp = new DeplacementPion(damier);
         damier.deplacer(35, 30);
         damier.deplacer(20, 24);
-        damier.deplacer(28,22);
+        damier.deplacer(28, 22);
+    }
+
+    @Test
+    public void testCapturePionBlancVersLaDroite() {
+        Damier damier = new Damier();
+        for (int i = 1; i <= 50; i++) {
+            damier.ajouterPion(i, null);
+        }
+        Pion blanc = new Pion(Pion.Couleur.Blanc);
+        Pion noir = new Pion(Pion.Couleur.Noir);
+        damier.ajouterPion(22, blanc);
+        damier.ajouterPion(18, noir);
+        damier.deplacer(22, 13);
+        assertNull(damier.recupererPion(18));
+        assertEquals(blanc, damier.recupererPion(13));
+    }
+
+    @Test
+    public void testPromotionBlancEnDame() {
+        Damier damier = new Damier();
+        for (int i = 1; i <= 50; i++) {
+            damier.ajouterPion(i, null);
+        }
+        damier.ajouterPion(44, new Pion(Pion.Couleur.Noir));
+        damier.ajouterPion(9, new Pion());
+        assertEquals('P', damier.recupererPion(44).getRepresentation());
+        assertEquals('p', damier.recupererPion(9).getRepresentation());
+        damier.deplacer(9, 3);
+        damier.deplacer(44, 50);
+        assertEquals('D', damier.recupererPion(50).getRepresentation());
+        assertEquals('d', damier.recupererPion(3).getRepresentation());
+    }
+
+    @Test
+    public void testCapturePionBlanc_HorsLigne1_Gauche() {
+        Damier damier = new Damier();
+        for (int i = 1; i <= 50; i++) {
+            damier.ajouterPion(i, null);
+        }
+        Pion blanc = new Pion(Pion.Couleur.Blanc);
+        Pion noir = new Pion(Pion.Couleur.Noir);
+        damier.ajouterPion(26, blanc);
+        damier.ajouterPion(21, noir);
+        damier.deplacer(26, 17);
+        assertNull(damier.recupererPion(21));
+        assertEquals(blanc, damier.recupererPion(17));
+    }
+
+    @Test
+    public void testCaptureParDame_Simple() {
+        Damier damier = new Damier();
+        for (int i = 1; i <= 50; i++) {
+            damier.ajouterPion(i, null);
+        }
+        Dame dame = new Dame(Pion.Couleur.Blanc);
+        damier.ajouterPion(32, dame);
+        damier.deplacer(32, 23);
+        assertEquals(dame, damier.recupererPion(23));
     }
 }

@@ -1,21 +1,45 @@
-import cstjean.mobile.dames.Damier;
-import cstjean.mobile.dames.DeplacementPion;
-import cstjean.mobile.dames.Pion;
-import cstjean.mobile.dames.Dame;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
+import cstjean.mobile.dames.Dame;
+import cstjean.mobile.dames.Damier;
+import cstjean.mobile.dames.DeplacementPion;
+import cstjean.mobile.dames.Pion;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Classe de test unitaire pour la classe {@link DeplacementPion}.
+ *
+ * <p>Vérifie les différents comportements liés aux déplacements
+ * et aux captures des pions et des dames sur le damier.</p>
+ *
+ * <p>Les tests couvrent :
+ * <ul>
+ *     <li>Les déplacements simples des pions blancs et noirs,</li>
+ *     <li>Les déplacements et captures possibles des dames,</li>
+ *     <li>Les situations où un pion est bloqué,</li>
+ *     <li>Les positions invalides et les coordonnées incorrectes.</li>
+ * </ul>
+ * </p>
+ */
 public class TestDeplacementPion {
+    /** Le damier sur lequel les tests de déplacement sont effectués. */
     private Damier damier;
+
+    /** L’objet responsable de calculer les déplacements et captures possibles des pions. */
     private DeplacementPion deplacement;
 
+    /**
+     * Initialise un nouveau damier avant chaque test.
+     *
+     * <p>Cette méthode crée un damier vide, l’initialise avec les pions
+     * de départ, puis instancie l’objet {@link DeplacementPion}
+     * qui sera utilisé pour vérifier les mouvements possibles.</p>
+     */
     @Before
     public void setup() {
         damier = new Damier();
@@ -30,7 +54,7 @@ public class TestDeplacementPion {
 
         for (int pos : cases) {
             Pion p = damier.recupererPion(pos);
-            assertTrue(p == null); // Les cases de déplacements simples doivent être vides
+            assertNull(p); // Les cases de déplacements simples doivent être vides
         }
     }
 
@@ -41,7 +65,7 @@ public class TestDeplacementPion {
 
         for (int pos : cases) {
             Pion p = damier.recupererPion(pos);
-            assertTrue(p == null);
+            assertNull(p);
         }
     }
 
@@ -53,7 +77,7 @@ public class TestDeplacementPion {
 
         for (int pos : cases) {
             Pion p = damier.recupererPion(pos);
-            assertTrue(p == null);
+            assertNull(p);
         }
     }
 
@@ -65,7 +89,7 @@ public class TestDeplacementPion {
 
         for (int pos : cases) {
             Pion p = damier.recupererPion(pos);
-            assertTrue(p == null);
+            assertNull(p);
         }
     }
 
@@ -95,7 +119,38 @@ public class TestDeplacementPion {
     public void testDeplacementSiDame() {
         damier.ajouterPion(21, new Dame());
         assertNull(damier.getPions().get(27));
-        damier.deplacer(21,27);
+        damier.deplacer(21, 27);
         assertEquals('d', damier.getPions().get(27 - 1).getRepresentation());
+    }
+
+    @Test
+    public void testConvertirPositionInvalide() {
+        int[] coord = deplacement.convertirPosition(999);
+        assertEquals(-1, coord[0]);
+        assertEquals(-1, coord[1]);
+    }
+
+    @Test
+    public void testPositionDepuisCoordInvalide() {
+        int pos = deplacement.positionDepuisCoord(0, 0);
+        assertEquals(-1, pos);
+    }
+
+    @Test
+    public void testCapturePossiblePourDame() {
+        Dame dameBlanche = new Dame(Pion.Couleur.Blanc);
+        Pion noir = new Pion(Pion.Couleur.Noir);
+        damier.ajouterPion(32, dameBlanche);
+        damier.ajouterPion(27, noir);
+        List<Integer> cases = deplacement.getToutesLesPossibilites(32);
+
+        boolean capturePossible = false;
+        for (int pos : cases) {
+            if (pos > 27) {
+                capturePossible = true;
+                break;
+            }
+        }
+        assertTrue(capturePossible);
     }
 }

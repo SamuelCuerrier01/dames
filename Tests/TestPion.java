@@ -1,8 +1,7 @@
-import cstjean.mobile.dames.Pion;
-import junit.framework.TestCase;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import cstjean.mobile.dames.Pion;
+import org.junit.Test;
 
 /**
  * Classe de test unitaire pour la classe {@link Pion}.
@@ -17,10 +16,6 @@ import static org.junit.Assert.assertEquals;
  *     <li>La représentation visuelle d'un pion correspond bien
  *     à sa couleur ({@code 'P'} pour un pion noir, {@code 'p'} pour un pion blanc).</li>
  * </ul>
- *
- * <p>
- * Ces tests utilisent l'API JUnit 3, via l'héritage de {@link TestCase}.
- * </p>
  *
  * @author Samuel Cuerrier
  */

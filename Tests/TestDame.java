@@ -1,8 +1,8 @@
+import static org.junit.Assert.assertEquals;
+
 import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Pion;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Classe de test unitaire pour {@link Dame}.

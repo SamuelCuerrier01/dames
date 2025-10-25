@@ -205,16 +205,16 @@ public class Damier {
         try {
             if (dp.getToutesLesPossibilites(posInitial).contains(posFinal) &&
                     getPions().get(posInitial - 1).getCouleur() == joueurCourant) {
-                if(Math.abs(posFinal - posInitial) > 6)
-                {
+                if (Math.abs(posFinal - posInitial) > 6) {
                     ajouterPion(capture(posInitial, posFinal, dp), null);
                     ajouterPion(posFinal, getPions().get(posInitial - 1));
                 } else {
                     ajouterPion(posFinal, getPions().get(posInitial - 1));
                 }
-                if(ligneHaut.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc)
-                {ajouterPion(posFinal, new Dame(Pion.Couleur.Blanc));
-                } else if(ligneBas.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                if (ligneHaut.contains(posFinal) && getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
+                    ajouterPion(posFinal, new Dame(Pion.Couleur.Blanc));
+                } else if (ligneBas.contains(posFinal) &&
+                        getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
                     ajouterPion(posFinal, new Dame(Pion.Couleur.Noir));
                 }
                 ajouterPion(posInitial, null);
@@ -225,17 +225,18 @@ public class Damier {
                     joueurCourant = Pion.Couleur.Blanc;
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
+
             System.out.println(e);
         }
         System.out.println(da.afficher(this));
     }
 
     private int capture(int posInitial, int posFinal, DeplacementPion dp) {
-        int coordInitial[] = dp.convertirPosition(posInitial);
-        int coordFinal[] = dp.convertirPosition(posFinal);
-        if(getPions().get(posInitial - 1) instanceof Dame) {
-            if(coordFinal[1] - coordInitial[1] < 0){
+        int[] coordInitial = dp.convertirPosition(posInitial);
+        int[] coordFinal = dp.convertirPosition(posFinal);
+        if (getPions().get(posInitial - 1) instanceof Dame) {
+            if (coordFinal[1] - coordInitial[1] < 0) {
                 if (coordFinal[0] - coordInitial[0] < 0) {
                     return dp.positionDepuisCoord(coordFinal[0] + 1, coordFinal[1] + 1);
                 } else {
@@ -250,47 +251,39 @@ public class Damier {
             }
         }
 
-        List<Integer> ligne1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,11,12,13,14,15,21,22,23,24,25,31,32,33,34,35,41,42,43,44,45));
-        if (ligne1.contains(posInitial))
-        {
+        List<Integer> ligne1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 11, 12, 13, 14, 15,
+                21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 41, 42, 43, 44, 45));
+        if (ligne1.contains(posInitial)) {
             if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
-                if (posFinal - posInitial == -11)
-                {
+                if (posFinal - posInitial == -11) {
                     return posFinal + 6;
                 }
-                if (posFinal - posInitial == -9)
-                {
+                if (posFinal - posInitial == -9) {
                     return posFinal + 5;
                 }
             }
-            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial == 11)
-                {
+            if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                if (posFinal - posInitial == 11) {
                     return posFinal - 5;
                 }
-                if(posFinal - posInitial == 9)
-                {
+                if (posFinal - posInitial == 9) {
                     return posFinal - 4;
                 }
             }
         } else {
-            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
-                if(posFinal - posInitial == -9)
-                {
+            if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Blanc) {
+                if (posFinal - posInitial == -9) {
                     return posFinal + 4;
                 }
-                if(posFinal - posInitial == -11)
-                {
+                if (posFinal - posInitial == -11) {
                     return posFinal + 5;
                 }
             }
-            if(getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
-                if(posFinal - posInitial == 11)
-                {
+            if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+                if (posFinal - posInitial == 11) {
                     return posFinal - 6;
                 }
-                if(posFinal - posInitial == 9)
-                {
+                if (posFinal - posInitial == 9) {
                     return posFinal - 5;
                 }
             }
