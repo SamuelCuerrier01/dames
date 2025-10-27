@@ -1,7 +1,6 @@
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Damier;
@@ -118,9 +117,9 @@ public class TestDeplacementPion {
     @Test
     public void testDeplacementSiDame() {
         damier.ajouterPion(21, new Dame());
-        assertNull(damier.getPions().get(27));
+        assertNull(damier.recupererPion(27));
         damier.deplacer(21, 27);
-        assertEquals('d', damier.getPions().get(27 - 1).getRepresentation());
+        assertEquals('d', damier.recupererPion(27).getRepresentation());
     }
 
     @Test
@@ -152,5 +151,17 @@ public class TestDeplacementPion {
             }
         }
         assertTrue(capturePossible);
+    }
+
+
+    @Test
+    public void testGetPosCapturables() {
+        Pion pionBlanc = new Pion(Pion.Couleur.Blanc);
+        Pion pionNoir = new Pion(Pion.Couleur.Noir);
+        damier.ajouterPion(32, pionBlanc);
+        damier.ajouterPion(27, pionNoir);
+        deplacement.getToutesLesPossibilites(32);
+        assertTrue(deplacement.getPosCapturables().contains(27));
+        assertFalse(deplacement.getPosCapturables().contains(32));
     }
 }
