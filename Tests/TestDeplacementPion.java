@@ -1,6 +1,7 @@
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Damier;
@@ -152,7 +153,6 @@ public class TestDeplacementPion {
         }
         assertTrue(capturePossible);
     }
-
 
     @Test
     public void testGetPosCapturables() {
