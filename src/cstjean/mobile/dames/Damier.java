@@ -226,16 +226,24 @@ public class Damier {
                 }
             }
         } catch (Exception e) {
-
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
         System.out.println(da.afficher(this));
     }
 
-    private int capture(int posInitial, int posFinal, DeplacementPion dp) {
+    /**
+     * Calcule la position du pion capturé entre deux positions.
+     *
+     * @param posInitial position de départ du pion
+     * @param posFinal position d’arrivée du pion
+     * @param dp outil de conversion des positions en coordonnées
+     * @return la position du pion capturé, ou -1 s’il n’y en a pas
+     */
+
+    public int capture(int posInitial, int posFinal, DeplacementPion dp) {
         int[] coordInitial = dp.convertirPosition(posInitial);
         int[] coordFinal = dp.convertirPosition(posFinal);
-        if (getPions().get(posInitial - 1) instanceof Dame) {
+        if (recupererPion(posInitial) instanceof Dame) {
             if (coordFinal[1] - coordInitial[1] < 0) {
                 if (coordFinal[0] - coordInitial[0] < 0) {
                     return dp.positionDepuisCoord(coordFinal[0] + 1, coordFinal[1] + 1);
@@ -262,7 +270,7 @@ public class Damier {
                     return posFinal + 5;
                 }
             }
-            if (getPions().get(posInitial - 1).getCouleur() == Pion.Couleur.Noir) {
+            if (recupererPion(posInitial).getCouleur() == Pion.Couleur.Noir) {
                 if (posFinal - posInitial == 11) {
                     return posFinal - 5;
                 }

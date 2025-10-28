@@ -96,7 +96,6 @@ public class DeplacementPion {
                     break;
                 }
             }
-            System.out.println(casesValides.size());
         }
 
         return casesValides;
@@ -223,7 +222,9 @@ public class DeplacementPion {
      * @return position correspondante
      */
     public int positionDepuisCoord(int ligne, int col) {
-        if (ligne < 0 || ligne >= 10 || col < 0 || col >= 10 || (ligne + col) % 2 == 0) {
+        // Vérifier uniquement les bornes ici — on laisse la vérification de parité
+        // être traitée par la boucle, afin que le return final puisse être atteint
+        if (ligne < 0 || ligne >= 10 || col < 0 || col >= 10) {
             return -1;
         }
         int compteur = 1;

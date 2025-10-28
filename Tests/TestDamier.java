@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 
 import cstjean.mobile.dames.Dame;
 import cstjean.mobile.dames.Damier;
@@ -256,4 +257,42 @@ public class TestDamier {
         damier.deplacer(32, 23);
         assertEquals(dame, damier.recupererPion(23));
     }
+
+    @Test
+    public void testDameDamier() {
+        Damier damier = new Damier();
+        DeplacementPion dp = new DeplacementPion(damier);
+        Dame dameBlanc = new Dame(Pion.Couleur.Blanc);
+        damier.ajouterPion(32, dameBlanc);
+        assertEquals(dameBlanc, damier.recupererPion(32));
+        assertEquals(38, damier.capture(32, 43, dp));
+        assertEquals(37, damier.capture(32, 41, dp));
+        assertEquals(27, damier.capture(32, 21, dp));
+        assertEquals(28, damier.capture(32, 23, dp));
+    }
+
+    @Test
+    public void testPionNoirCapture() {
+        Damier damier = new Damier();
+        DeplacementPion dp = new DeplacementPion(damier);
+        Pion noir = new Pion(Pion.Couleur.Noir);
+        Pion blanc = new Pion();
+        damier.ajouterPion(28, blanc);
+        damier.ajouterPion(23, noir);
+        assertEquals(28, damier.capture(23, 32, dp));
+        assertEquals(29, damier.capture(23, 34, dp));
+        assertEquals(22, damier.capture(28, 17, dp));
+        assertEquals(-1, damier.capture(28, 38, dp));
+
+    }
+
+    @Test
+    public void testDeplacerThrowsException() {
+        Damier damier = new Damier();
+
+        assertThrows(Exception.class, () -> {
+            damier.deplacer(60, 1);
+        });
+    }
+
 }

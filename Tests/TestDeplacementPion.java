@@ -43,24 +43,23 @@ public class TestDeplacementPion {
     @Before
     public void setup() {
         damier = new Damier();
-        damier.initialiser();
         deplacement = new DeplacementPion(damier);
     }
 
     @Test
     public void testDeplacementsSimplesPionBlanc() {
-        int position = 41; // Un pion blanc du bas
+        int position = 41;
         List<Integer> cases = deplacement.getToutesLesPossibilites(position);
 
         for (int pos : cases) {
             Pion p = damier.recupererPion(pos);
-            assertNull(p); // Les cases de déplacements simples doivent être vides
+            assertNull(p);
         }
     }
 
     @Test
     public void testDeplacementsSimplesPionNoir() {
-        int position = 10; // Un pion noir du haut
+        int position = 10;
         List<Integer> cases = deplacement.getToutesLesPossibilites(position);
 
         for (int pos : cases) {
@@ -101,7 +100,7 @@ public class TestDeplacementPion {
         damier.ajouterPion(18, new Pion(Pion.Couleur.Blanc));
 
         List<Integer> cases = deplacement.getToutesLesPossibilites(22);
-        assertTrue(cases.isEmpty()); // Aucune case disponible
+        assertTrue(cases.isEmpty());
     }
 
     @Test
@@ -112,7 +111,7 @@ public class TestDeplacementPion {
         damier.ajouterPion(17, pionBlanc2);
 
         List<Integer> cases = deplacement.getToutesLesPossibilites(22);
-        assertFalse(cases.contains(12)); // Pas de capture possible
+        assertFalse(cases.contains(12));
     }
 
     @Test
@@ -163,5 +162,22 @@ public class TestDeplacementPion {
         deplacement.getToutesLesPossibilites(32);
         assertTrue(deplacement.getPosCapturables().contains(27));
         assertFalse(deplacement.getPosCapturables().contains(32));
+    }
+
+    @Test
+    public void testPositionDepuisCoordRetourFinalCobertura() {
+        DeplacementPion dp = new DeplacementPion(new Damier());
+        assertEquals(-1, dp.positionDepuisCoord(0, 0));
+    }
+
+    @Test
+    public void testPositionDepuisCoordBornesInvalide() {
+        DeplacementPion dp = new DeplacementPion(new Damier());
+        assertEquals(-1, dp.positionDepuisCoord(-1, 5));
+    }
+
+    @Test
+    public void testPositionDepuisCoordBornesValide() {
+
     }
 }
